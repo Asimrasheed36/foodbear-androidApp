@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp"
+    tools:context=".Signup">
+
+    <TextView
+        android:id="@+id/title2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="Sign Up"
+        android:textColor="#6c348e"
+        android:textSize="40sp" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Name"
+        android:textColor="#6c348e"
+        android:textSize="16dp"
+        android:paddingTop="10dp"
+        android:paddingLeft="30dp"
+        android:gravity="left"/>
+
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="285dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="name"
+        android:inputType="textAutoComplete|textNoSuggestions|textPersonName"
+        android:layout_gravity="center"/>
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="email"
+        android:textColor="#6c348e"
+        android:textSize="16dp"
+        android:paddingTop="10dp"
+        android:paddingLeft="30dp"
+        android:gravity="left"/>
+
+    <EditText
+        android:id="@+id/editText2"
+        android:layout_width="285dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textEmailAddress"
+        android:hint="email"
+        android:layout_gravity="center"/>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Phone Number"
+        android:textColor="#6c348e"
+        android:textSize="16dp"
+        android:paddingTop="10dp"
+        android:paddingLeft="30dp"
+        android:gravity="left"/>
+
+    <EditText
+        android:id="@+id/editText3"
+        android:layout_width="285dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="phone"
+        android:hint="Phone Number"
+        android:layout_gravity="center"/>
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Password"
+        android:textColor="#6c348e"
+        android:textSize="16dp"
+        android:paddingTop="10dp"
+        android:paddingLeft="30dp"
+        android:gravity="left"/>
+
+    <EditText
+        android:id="@+id/editText4"
+        android:layout_width="285dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPassword"
+        android:hint="password"
+        android:layout_gravity="center"/>
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="CNIC"
+        android:textColor="#6c348e"
+        android:textSize="16dp"
+        android:paddingTop="10dp"
+        android:paddingLeft="30dp"
+        android:gravity="left"/>
+
+    <EditText
+        android:id="@+id/editText5"
+        android:layout_width="285dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="phone"
+        android:hint="CNIC"
+        android:layout_gravity="center"/>
+    <TextView
+        android:id="@+id/address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Address"
+        android:textColor="#6c348e"
+        android:textSize="16dp"
+        android:paddingTop="10dp"
+        android:paddingLeft="30dp"
+        android:gravity="left"/>
+
+    <EditText
+        android:id="@+id/addressfield"
+        android:layout_width="285dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="phone"
+        android:hint="Address"
+        android:layout_gravity="center"/>
+    <Button
+        android:id="@+id/signup_btn"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:background="#6c348e"
+        android:text="SIGN UP"
+        android:textColor="@android:color/white"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="15dp"
+        android:onClick="Login"
+        android:text="Already a Member ?"
+        android:textColor="#6c348e"
+        android:textSize="18sp"
+        android:layout_gravity="center"/>
+</LinearLayout>
