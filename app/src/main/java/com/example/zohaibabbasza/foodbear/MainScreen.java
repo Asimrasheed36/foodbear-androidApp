@@ -65,14 +65,15 @@ public class MainScreen extends AppCompatActivity
                     @Override
                     public void onCompleted(Exception e, JsonObject result) {
                         // do stuff with the result or error
-                        //TextView tv = findViewById(R.id.cat);
-                        //tv.setText(result.toString());
+                        TextView tv = findViewById(R.id.cat);
+                        tv.setText(result.toString());
                         if(result == null){
                             makeToast("result null");
                         }
                         else{
-                            makeToast("success");
+                            tv.setText(result.getAsJsonArray("data").get(2).getAsJsonObject().get("cat_id").toString());
                         }
+
                     }
                 });
 
@@ -89,7 +90,7 @@ public class MainScreen extends AppCompatActivity
         for (int i = 0; i < 4; i++) {
             LinearLayout box=(LinearLayout)View.inflate(this,R.layout.dynamic_content,null);
            LinearLayout.LayoutParams layoutParams1 = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT,1000
+                ViewGroup.LayoutParams.WRAP_CONTENT,600
             ) ;
            box.setLayoutParams(layoutParams1);
             //layoutParams.gravity = Gravity.CENTER;
