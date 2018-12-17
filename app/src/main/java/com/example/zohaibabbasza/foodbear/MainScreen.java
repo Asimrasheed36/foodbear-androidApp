@@ -24,12 +24,13 @@ import android.widget.Toast;
 import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
+import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
 
 public class MainScreen extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
+    public  JsonObject jsonData;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,13 +66,14 @@ public class MainScreen extends AppCompatActivity
                     @Override
                     public void onCompleted(Exception e, JsonObject result) {
                         // do stuff with the result or error
-                        TextView tv = findViewById(R.id.cat);
-                        tv.setText(result.toString());
+                        //TextView tv = findViewById(R.id.cat);
+                        //tv.setText(result.toString());
                         if(result == null){
                             makeToast("result null");
                         }
                         else{
-                            tv.setText(result.getAsJsonArray("data").get(2).getAsJsonObject().get("cat_id").toString());
+                          //  tv.setText(result.getAsJsonArray("data").getAsJsonObject().get("cat_id").toString());
+                            jsonData = result;
                         }
 
                     }
@@ -87,25 +89,17 @@ public class MainScreen extends AppCompatActivity
         // Add 4 images
         //box.setLayoutParams(layoutParams);
         //layout.addView(box);
-        for (int i = 0; i < 4; i++) {
+
+        for (int i = 0; i < 2; i++) {
             LinearLayout box=(LinearLayout)View.inflate(this,R.layout.dynamic_content,null);
            LinearLayout.LayoutParams layoutParams1 = new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT,600
             ) ;
            box.setLayoutParams(layoutParams1);
-            //layoutParams.gravity = Gravity.CENTER;
-            /* ImageView imageView = new ImageView(this);
-            imageView.setImageResource(R.drawable.za);
-            //imageView.setOnClickListener(documentImageListener);
-            imageView.setLayoutParams(layoutParams);
-
-            TextView textView = new TextView(this);
-            textView.setTextColor(Color.BLACK);
-            textView.setText("zohaib");
-            layout.addView(imageView);
-            layout.addView(textView);*/
-           // box.getLayoutParams().height = 500;
-            //box.getLayoutParams().width = 1000;
+           //ImageView iview = findViewById(R.id.food_image);
+            //TextView tv = findViewById(R.id.food_text);
+           //tv.setText("Zohaib");
+            //Picasso.get().load(jsonData.getAsJsonArray("data").get(i).getAsJsonObject().get("cat_image").toString()).into(iview);
             layout.addView(box);
         }
     }
