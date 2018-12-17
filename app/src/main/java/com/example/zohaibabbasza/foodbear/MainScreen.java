@@ -15,6 +15,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -87,7 +88,10 @@ public class MainScreen extends AppCompatActivity
         //layout.addView(box);
         for (int i = 0; i < 4; i++) {
             LinearLayout box=(LinearLayout)View.inflate(this,R.layout.dynamic_content,null);
-            //layoutParams.setMargins(20, 10, 20, 10);
+           // LinearLayout.LayoutParams layoutParams1 = new LinearLayout.LayoutParams(
+            //        LinearLayout.LayoutParams.WRAP_CONTENT,1000
+            //) ;
+           //box.setLayoutParams(layoutParams1);
             //layoutParams.gravity = Gravity.CENTER;
             /* ImageView imageView = new ImageView(this);
             imageView.setImageResource(R.drawable.za);
@@ -99,7 +103,7 @@ public class MainScreen extends AppCompatActivity
             textView.setText("zohaib");
             layout.addView(imageView);
             layout.addView(textView);*/
-            //box.getLayoutParams().height = 800;
+           // box.getLayoutParams().height = 500;
             //box.getLayoutParams().width = 1000;
             layout.addView(box);
         }
