@@ -79,24 +79,29 @@ public class MainScreen extends AppCompatActivity
         LinearLayout layout = findViewById(R.id.image_container);
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
-        // Add 4 images
 
+
+        //LinearLayout.LayoutParams layoutbox = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        // Add 4 images
+        //box.setLayoutParams(layoutParams);
+        //layout.addView(box);
         for (int i = 0; i < 4; i++) {
-            layoutParams.setMargins(20, 10, 20, 10);
-            layoutParams.gravity = Gravity.CENTER;
-            ImageView imageView = new ImageView(this);
+            LinearLayout box=(LinearLayout)View.inflate(this,R.layout.dynamic_content,null);
+            //layoutParams.setMargins(20, 10, 20, 10);
+            //layoutParams.gravity = Gravity.CENTER;
+            /* ImageView imageView = new ImageView(this);
             imageView.setImageResource(R.drawable.za);
             //imageView.setOnClickListener(documentImageListener);
             imageView.setLayoutParams(layoutParams);
-            imageView.getLayoutParams().height = 800;
-            imageView.getLayoutParams().width = 1000;
+
             TextView textView = new TextView(this);
             textView.setTextColor(Color.BLACK);
             textView.setText("zohaib");
-            textView.setGravity();
             layout.addView(imageView);
-            layout.addView(textView);
-
+            layout.addView(textView);*/
+            //box.getLayoutParams().height = 800;
+            //box.getLayoutParams().width = 1000;
+            layout.addView(box);
         }
     }
     @Override
