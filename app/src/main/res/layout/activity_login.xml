@@ -68,7 +68,7 @@
         android:textColor="@android:color/white"
         android:layout_marginTop="35dp"
         android:layout_gravity="center"
-        android:onClick="mainScreen"/>
+        android:onClick="verify"/>
 
     <TextView
         android:id="@+id/forgot_pass"

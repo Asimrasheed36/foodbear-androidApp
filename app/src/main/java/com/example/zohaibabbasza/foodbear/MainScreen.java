@@ -59,7 +59,7 @@ public class MainScreen extends AppCompatActivity
 
     public void categoryView(){
         Ion.with(this)
-                .load("http://192.168.0.114:3000/api/get_type_of_foods/")
+                .load("http://192.168.0.104:8000/api/get_type_of_foods/")
                 .asJsonObject()
                 .setCallback(new FutureCallback<JsonObject>() {
                     @Override
@@ -88,10 +88,10 @@ public class MainScreen extends AppCompatActivity
         //layout.addView(box);
         for (int i = 0; i < 4; i++) {
             LinearLayout box=(LinearLayout)View.inflate(this,R.layout.dynamic_content,null);
-           // LinearLayout.LayoutParams layoutParams1 = new LinearLayout.LayoutParams(
-            //        LinearLayout.LayoutParams.WRAP_CONTENT,1000
-            //) ;
-           //box.setLayoutParams(layoutParams1);
+           LinearLayout.LayoutParams layoutParams1 = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,1000
+            ) ;
+           box.setLayoutParams(layoutParams1);
             //layoutParams.gravity = Gravity.CENTER;
             /* ImageView imageView = new ImageView(this);
             imageView.setImageResource(R.drawable.za);

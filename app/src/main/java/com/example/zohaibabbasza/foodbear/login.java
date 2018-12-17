@@ -65,7 +65,7 @@ public class login extends AppCompatActivity {
        // p.findViewById(R.id.password);
         JsonObject json = new JsonObject();
         Ion.with(this)
-                .load("http://192.168.0.114:3000/api/get_type_of_foods/")
+                .load("http://192.168.0.104:8000/api/get_type_of_foods/")
                 //.setBodyParameter("username", "zohaib")
                 //.setBodyParameter("password", "za123456")
                 .asJsonObject()
