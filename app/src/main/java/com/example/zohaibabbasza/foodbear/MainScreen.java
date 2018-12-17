@@ -21,6 +21,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
@@ -28,9 +29,12 @@ import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
+
 public class MainScreen extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    public  JsonObject jsonData;
+    public ArrayList cat_name = new ArrayList();
+    public ArrayList cat_image = new ArrayList();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +63,8 @@ public class MainScreen extends AppCompatActivity
     }
 
     public void categoryView(){
+
+
         Ion.with(this)
                 .load("http://192.168.0.104:8000/api/get_type_of_foods/")
                 .asJsonObject()
@@ -66,42 +72,47 @@ public class MainScreen extends AppCompatActivity
                     @Override
                     public void onCompleted(Exception e, JsonObject result) {
                         // do stuff with the result or error
-                        //TextView tv = findViewById(R.id.cat);
-                        //tv.setText(result.toString());
+                        TextView tv = findViewById(R.id.cat);
+                        //tv.setText(jsonData.toString());
                         if(result == null){
                             makeToast("result null");
                         }
                         else{
-                          //  tv.setText(result.getAsJsonArray("data").getAsJsonObject().get("cat_id").toString());
-                            jsonData = result;
+                            JsonArray arrResults = result.getAsJsonArray("data");
+
+                            for(int i = 0 ; i < arrResults.size() ; i++){
+                                cat_name.add(arrResults.get(i).getAsJsonObject().get("cat_name").toString());
+                                cat_image.add(arrResults.get(i).getAsJsonObject().get("cat_image").toString());
+
+                            }
+
                         }
 
                     }
-                });
 
+                });
 
         LinearLayout layout = findViewById(R.id.image_container);
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
 
 
-        //LinearLayout.LayoutParams layoutbox = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        // Add 4 images
-        //box.setLayoutParams(layoutParams);
-        //layout.addView(box);
-
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 3; i++) {
             LinearLayout box=(LinearLayout)View.inflate(this,R.layout.dynamic_content,null);
            LinearLayout.LayoutParams layoutParams1 = new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT,600
             ) ;
            box.setLayoutParams(layoutParams1);
-           //ImageView iview = findViewById(R.id.food_image);
-            //TextView tv = findViewById(R.id.food_text);
-           //tv.setText("Zohaib");
-            //Picasso.get().load(jsonData.getAsJsonArray("data").get(i).getAsJsonObject().get("cat_image").toString()).into(iview);
+
+
             layout.addView(box);
+           // ImageView iview = box.findViewById(R.id.food_image);
+
+           // Picasso.get().load(jsonData.getAsJsonArray("data").get(i).getAsJsonObject().get("cat_image").toString()).into(iview);
+           //TextView tv = box.findViewById(R.id.food_text);
+           //tv.setText(cat_image.get(i).toString());
         }
+
     }
     @Override
     public void onBackPressed() {
