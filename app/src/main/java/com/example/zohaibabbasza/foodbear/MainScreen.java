@@ -26,6 +26,9 @@ import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
+import com.squareup.picasso.Callback;
+
 
 import org.w3c.dom.Text;
 
@@ -54,6 +57,7 @@ public class MainScreen extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         categoryView();
+        ResturantView();
 
     }
 
@@ -71,19 +75,36 @@ public class MainScreen extends AppCompatActivity
                 .setCallback(new FutureCallback<JsonObject>() {
                     @Override
                     public void onCompleted(Exception e, JsonObject result) {
-                        // do stuff with the result or error
-                        TextView tv = findViewById(R.id.cat);
-                        //tv.setText(jsonData.toString());
                         if(result == null){
                             makeToast("result null");
                         }
                         else{
                             JsonArray arrResults = result.getAsJsonArray("data");
 
-                            for(int i = 0 ; i < arrResults.size() ; i++){
-                                cat_name.add(arrResults.get(i).getAsJsonObject().get("cat_name").toString());
-                                cat_image.add(arrResults.get(i).getAsJsonObject().get("cat_image").toString());
 
+                            LinearLayout layout = findViewById(R.id.image_container);
+                            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+
+
+                            for (int i = 0; i < arrResults.size(); i++) {
+                                LinearLayout box=(LinearLayout)View.inflate(MainScreen.this,R.layout.dynamic_content,null);
+                                LinearLayout.LayoutParams layoutParams1 = new LinearLayout.LayoutParams(
+                                        ViewGroup.LayoutParams.WRAP_CONTENT,650
+                                ) ;
+                                box.setLayoutParams(layoutParams1);
+
+
+                                layout.addView(box);
+                                ImageView iview = (ImageView)box.findViewById(R.id.food_image);
+                                //iview.setImageResource(R.drawable.za);
+                                String url = result.getAsJsonArray("data").get(i).getAsJsonObject().get("cat_image").getAsString();
+                                Picasso.get()
+                                        .load(url)
+                                        .fit()
+                                        .into(iview);
+                                TextView tv = box.findViewById(R.id.food_text);
+                                tv.setText(result.getAsJsonArray("data").get(i).getAsJsonObject().get("cat_name").getAsString());
                             }
 
                         }
@@ -92,27 +113,46 @@ public class MainScreen extends AppCompatActivity
 
                 });
 
-        LinearLayout layout = findViewById(R.id.image_container);
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
+    }
+    public void ResturantView(){
+        Ion.with(this)
+                .load("http://192.168.0.104:8000/api/get_list_of_restaurants/")
+                .asJsonObject()
+                .setCallback(new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject result) {
+                        LinearLayout layout = findViewById(R.id.resturant_container);
+                        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
+                        if (result == null) {
+                            makeToast("result null");
+                        } else {
+                            JsonArray arrResults = result.getAsJsonArray("data");
+                            for(int i= 0 ; i < arrResults.size() ; i++){
+                                LinearLayout box=(LinearLayout)View.inflate(MainScreen.this,R.layout.dynamic_resturants,null);
+                                LinearLayout.LayoutParams layoutParams1 = new LinearLayout.LayoutParams(
+                                        ViewGroup.LayoutParams.WRAP_CONTENT,800
+                                ) ;
+                                box.setLayoutParams(layoutParams1);
+                                layout.addView(box);
+                                TextView textName = box.findViewById(R.id.res_name);
+                                TextView textLocation = box.findViewById(R.id.location);
+                                String url = result.getAsJsonArray("data").get(i).getAsJsonObject().get("r_image").getAsString();
+                                //System.out.println("url"+" " + url);
+                                ImageView iview = (ImageView)box.findViewById(R.id.res_image);
+                                Picasso.get()
+                                        .load(url)
+                                        .fit()
+                                        .into(iview);
+                                textName.setText(result.getAsJsonArray("data").get(i).getAsJsonObject().get("r_name").getAsString());
+                                textLocation.setText(result.getAsJsonArray("data").get(i).getAsJsonObject().get("r_location").getAsString());
 
-        for (int i = 0; i < 3; i++) {
-            LinearLayout box=(LinearLayout)View.inflate(this,R.layout.dynamic_content,null);
-           LinearLayout.LayoutParams layoutParams1 = new LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT,600
-            ) ;
-           box.setLayoutParams(layoutParams1);
+                            }
 
-
-            layout.addView(box);
-           // ImageView iview = box.findViewById(R.id.food_image);
-
-           // Picasso.get().load(jsonData.getAsJsonArray("data").get(i).getAsJsonObject().get("cat_image").toString()).into(iview);
-           //TextView tv = box.findViewById(R.id.food_text);
-           //tv.setText(cat_image.get(i).toString());
-        }
-
+                        }
+                    }
+                });
     }
     @Override
     public void onBackPressed() {
