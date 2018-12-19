@@ -141,15 +141,16 @@ public class MainScreen extends AppCompatActivity
                                         ViewGroup.LayoutParams.WRAP_CONTENT,800
                                 ) ;
                                 box.setLayoutParams(layoutParams1);
+                                box.setId(result.getAsJsonArray("data").get(i).getAsJsonObject().get("r_id").getAsInt());
                                 layout.addView(box);
                                 TextView textName = box.findViewById(R.id.res_name);
                                 RatingBar rbar = box.findViewById(R.id.ratingBar);
                                 rbar.setRating(result.getAsJsonArray("data").get(i).getAsJsonObject().get("rating").getAsFloat());
                                 TextView textLocation = box.findViewById(R.id.location);
                                 String url = result.getAsJsonArray("data").get(i).getAsJsonObject().get("r_image").getAsString();
-                                System.out.println("url"+" " + url);
+                               // System.out.println("url"+" " + url);
                                 ImageView iview = (ImageView)box.findViewById(R.id.res_image);
-                                System.out.println("Image"+ " " +iview.toString());
+                                //System.out.println("Image"+ " " +iview.toString());
                                 Picasso.get()
                                         .load(url).placeholder(R.drawable.za)
                                         .fit()
@@ -250,5 +251,31 @@ public class MainScreen extends AppCompatActivity
 
 
 
+    }
+    public void ResturantFoodScreen(View v){
+        a =v.getId();
+        makeToast(Integer.toString(a));
+        Ion.with(this)
+                .load("http://192.168.0.104:8000/api/get_list_of_restaurants/")
+                .asJsonObject()
+                .setCallback(new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject result) {
+                        JsonArray arrResults = result.getAsJsonArray("data");
+
+                        for(int i = 0 ; i < arrResults.size() ; i++){
+                            if(result.getAsJsonArray("data").get(i).getAsJsonObject().get("r_id").getAsString().equals(Integer.toString(a))){
+                                url_image = result.getAsJsonArray("data").get(i).getAsJsonObject().get("r_image").getAsString();
+                                System.out.println("link: "+url_image);
+                                Intent in = new Intent();
+                                in.setClass(MainScreen.this,FoodScreen.class);
+                                in.putExtra("r_id",Integer.toString(a));
+                                in.putExtra("r_image",url_image);
+                                startActivity(in);
+
+                            }
+                        }
+                    }
+                });
     }
 }

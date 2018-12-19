@@ -64,6 +64,7 @@ public class cat_food extends AppCompatActivity {
                                         ViewGroup.LayoutParams.WRAP_CONTENT,300
                                 ) ;
                                 box.setLayoutParams(layoutParams1);
+                                box.setId(result.get(i).getAsJsonObject().get("r_id").getAsInt());
                                 layout.addView(box);
                                 TextView textName = box.findViewById(R.id.name_cat_res);
                                 RatingBar rbar = box.findViewById(R.id.cat_res_ratingBar);
