@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,7 +37,8 @@ import java.util.ArrayList;
 
 public class MainScreen extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    public ArrayList cat_name = new ArrayList();
+    public int a;
+    public String url_image;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,7 +71,7 @@ public class MainScreen extends AppCompatActivity
 
 
         Ion.with(this)
-                .load("http://10.20.188.206:8000/api/get_type_of_foods/")
+                .load("http://192.168.0.104:8000/api/get_type_of_foods/")
                 .asJsonObject()
                 .setCallback(new FutureCallback<JsonObject>() {
                     @Override
@@ -89,7 +91,7 @@ public class MainScreen extends AppCompatActivity
                             for (int i = 0; i < arrResults.size(); i++) {
                                 LinearLayout box=(LinearLayout)View.inflate(MainScreen.this,R.layout.dynamic_content,null);
                                 LinearLayout.LayoutParams layoutParams1 = new LinearLayout.LayoutParams(
-                                        ViewGroup.LayoutParams.WRAP_CONTENT,700
+                                        ViewGroup.LayoutParams.WRAP_CONTENT,750
                                 ) ;
                                 box.setLayoutParams(layoutParams1);
 
@@ -121,7 +123,7 @@ public class MainScreen extends AppCompatActivity
     }
     public void ResturantView(){
         Ion.with(this)
-                .load("http://10.20.188.206:8000/api/get_list_of_restaurants/")
+                .load("http://192.168.0.104:8000/api/get_list_of_restaurants/")
                 .asJsonObject()
                 .setCallback(new FutureCallback<JsonObject>() {
                     @Override
@@ -141,6 +143,8 @@ public class MainScreen extends AppCompatActivity
                                 box.setLayoutParams(layoutParams1);
                                 layout.addView(box);
                                 TextView textName = box.findViewById(R.id.res_name);
+                                RatingBar rbar = box.findViewById(R.id.ratingBar);
+                                rbar.setRating(result.getAsJsonArray("data").get(i).getAsJsonObject().get("rating").getAsFloat());
                                 TextView textLocation = box.findViewById(R.id.location);
                                 String url = result.getAsJsonArray("data").get(i).getAsJsonObject().get("r_image").getAsString();
                                 System.out.println("url"+" " + url);
@@ -218,11 +222,33 @@ public class MainScreen extends AppCompatActivity
         startActivity(in);
     }
     public void cat_foodScreen(View v){
-        int a =v.getId();
-        Intent in = new Intent();
-        in.setClass(this,cat_food.class);
-        in.putExtra("cat_id",a);
-        startActivity(in);
+         a =v.getId();
+
+        String b =  Integer.toString(a);
+        Ion.with(this)
+                .load("http://192.168.0.104:8000/api/get_type_of_foods/")
+                .asJsonObject()
+                .setCallback(new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject result) {
+                        JsonArray arrResults = result.getAsJsonArray("data");
+
+                        for(int i = 0 ; i < arrResults.size() ; i++){
+                            if(result.getAsJsonArray("data").get(i).getAsJsonObject().get("cat_id").getAsString().equals(Integer.toString(a))){
+                                url_image = result.getAsJsonArray("data").get(i).getAsJsonObject().get("cat_image").getAsString();
+                                System.out.println("link: "+url_image);
+                                Intent in = new Intent();
+                                in.setClass(MainScreen.this,cat_food.class);
+                                in.putExtra("cat_id",Integer.toString(a));
+                                in.putExtra("cat_image",url_image);
+                                startActivity(in);
+
+                            }
+                        }
+                    }
+                });
+
+
 
     }
 }
