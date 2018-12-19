@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
@@ -65,13 +66,13 @@ public class login extends AppCompatActivity {
        // p.findViewById(R.id.password);
         JsonObject json = new JsonObject();
         Ion.with(this)
-                .load("http://192.168.0.104:8000/api/get_type_of_foods/")
+                .load("http://10.20.188.206:8000/api/get_filter_restaurants/2/")
                 //.setBodyParameter("username", "zohaib")
                 //.setBodyParameter("password", "za123456")
-                .asJsonObject()
-                .setCallback(new FutureCallback<JsonObject>() {
+                .asJsonArray()
+                .setCallback(new FutureCallback<JsonArray>() {
                     @Override
-                    public void onCompleted(Exception e, JsonObject result) {
+                    public void onCompleted(Exception e, JsonArray result) {
                         TextView Rview ;
                         Rview = findViewById(R.id.new_user);
 

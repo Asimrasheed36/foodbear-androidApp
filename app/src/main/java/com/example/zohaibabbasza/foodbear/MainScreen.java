@@ -37,7 +37,6 @@ import java.util.ArrayList;
 public class MainScreen extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     public ArrayList cat_name = new ArrayList();
-    public ArrayList cat_image = new ArrayList();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,7 +69,7 @@ public class MainScreen extends AppCompatActivity
 
 
         Ion.with(this)
-                .load("http://192.168.0.104:8000/api/get_type_of_foods/")
+                .load("http://10.20.188.206:8000/api/get_type_of_foods/")
                 .asJsonObject()
                 .setCallback(new FutureCallback<JsonObject>() {
                     @Override
@@ -90,12 +89,15 @@ public class MainScreen extends AppCompatActivity
                             for (int i = 0; i < arrResults.size(); i++) {
                                 LinearLayout box=(LinearLayout)View.inflate(MainScreen.this,R.layout.dynamic_content,null);
                                 LinearLayout.LayoutParams layoutParams1 = new LinearLayout.LayoutParams(
-                                        ViewGroup.LayoutParams.WRAP_CONTENT,650
+                                        ViewGroup.LayoutParams.WRAP_CONTENT,700
                                 ) ;
                                 box.setLayoutParams(layoutParams1);
 
+                                box.setId(result.getAsJsonArray("data").get(i).getAsJsonObject().get("cat_id").getAsInt());
 
                                 layout.addView(box);
+                                TextView cat_id = box.findViewById(R.id.cat_id);
+
                                 ImageView iview = (ImageView)box.findViewById(R.id.food_image);
                                 //iview.setImageResource(R.drawable.za);
                                 String url = result.getAsJsonArray("data").get(i).getAsJsonObject().get("cat_image").getAsString();
@@ -105,6 +107,8 @@ public class MainScreen extends AppCompatActivity
                                         .into(iview);
                                 TextView tv = box.findViewById(R.id.food_text);
                                 tv.setText(result.getAsJsonArray("data").get(i).getAsJsonObject().get("cat_name").getAsString());
+                                cat_id.setText(result.getAsJsonArray("data").get(i).getAsJsonObject().get("cat_id").getAsString());
+
                             }
 
                         }
@@ -117,7 +121,7 @@ public class MainScreen extends AppCompatActivity
     }
     public void ResturantView(){
         Ion.with(this)
-                .load("http://192.168.0.104:8000/api/get_list_of_restaurants/")
+                .load("http://10.20.188.206:8000/api/get_list_of_restaurants/")
                 .asJsonObject()
                 .setCallback(new FutureCallback<JsonObject>() {
                     @Override
@@ -139,15 +143,15 @@ public class MainScreen extends AppCompatActivity
                                 TextView textName = box.findViewById(R.id.res_name);
                                 TextView textLocation = box.findViewById(R.id.location);
                                 String url = result.getAsJsonArray("data").get(i).getAsJsonObject().get("r_image").getAsString();
-                                //System.out.println("url"+" " + url);
+                                System.out.println("url"+" " + url);
                                 ImageView iview = (ImageView)box.findViewById(R.id.res_image);
+                                System.out.println("Image"+ " " +iview.toString());
                                 Picasso.get()
-                                        .load(url)
+                                        .load(url).placeholder(R.drawable.za)
                                         .fit()
                                         .into(iview);
                                 textName.setText(result.getAsJsonArray("data").get(i).getAsJsonObject().get("r_name").getAsString());
                                 textLocation.setText(result.getAsJsonArray("data").get(i).getAsJsonObject().get("r_location").getAsString());
-
                             }
 
                         }
@@ -212,5 +216,13 @@ public class MainScreen extends AppCompatActivity
         Intent in=new Intent();
         in.setClass(this,FoodScreen.class);
         startActivity(in);
+    }
+    public void cat_foodScreen(View v){
+        int a =v.getId();
+        Intent in = new Intent();
+        in.setClass(this,cat_food.class);
+        in.putExtra("cat_id",a);
+        startActivity(in);
+
     }
 }

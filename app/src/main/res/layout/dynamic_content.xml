@@ -10,7 +10,7 @@
         tools:showIn="@layout/app_bar_main_screen"
         android:paddingLeft="20dp"
         android:layout_marginRight="10dp"
-        android:onClick="foodScreen"
+        android:onClick="cat_foodScreen"
         android:layout_marginLeft="10dp"
         android:padding="10dp"
         android:background="@drawable/border">
@@ -65,15 +65,15 @@
                 android:layout_weight="0.5"
                 android:paddingLeft="10dp"
                 />
-            <RatingBar
-                android:id="@+id/ratingBar"
+            <TextView
+                android:id="@+id/cat_id"
                 android:layout_width="wrap_content"
-                android:layout_height="20dp"
-                android:numStars="5"
-                style="?android:attr/ratingBarStyleSmall"
-                android:stepSize="1.0"
-                android:rating="3.0"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="4dp"/>
+                android:layout_height="wrap_content"
+                android:text="Delivery"
+                android:textSize="13sp"
+                android:layout_weight="0.5"
+                android:paddingLeft="10dp"
+                android:visibility="gone"
+                />
         </android.support.v7.widget.LinearLayoutCompat>
    </LinearLayout>
