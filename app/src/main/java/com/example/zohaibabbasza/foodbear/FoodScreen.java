@@ -3,13 +3,10 @@ package com.example.zohaibabbasza.foodbear;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,9 +18,6 @@ import com.squareup.picasso.Picasso;
 public class FoodScreen extends AppCompatActivity {
 
 
-    private TabAdapter adapter;
-    private TabLayout tabLayout;
-    private ViewPager viewPager;
     public String res_url;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,8 +26,6 @@ public class FoodScreen extends AppCompatActivity {
         Intent intent=this.getIntent();
         String r_id=intent.getStringExtra("r_id");
         String img_url = intent.getStringExtra("r_image");
-        System.out.println("id "+ r_id);
-        System.out.println("url " +img_url);
         ImageView iv =findViewById(R.id.r_image);
         Picasso.get()
                 .load(img_url).placeholder(R.drawable.za)
@@ -42,16 +34,46 @@ public class FoodScreen extends AppCompatActivity {
 
         res_url="http://192.168.0.104:8000/api/get_food_filter/"+r_id+"/";
 
-        viewPager = (ViewPager) findViewById(R.id.viewPager);
-        tabLayout = (TabLayout) findViewById(R.id.tabLayout);
-        adapter = new TabAdapter(getSupportFragmentManager());
-        adapter.addFragment(new Fragment1(), "Tab 1");
-        viewPager.setAdapter(adapter);
-        tabLayout.setupWithViewPager(viewPager);
+
+        makeFood();
     }
     public void makeToast(String msg) {
 
         Toast.makeText(this,msg,Toast.LENGTH_SHORT).show();
+    }
+    public void makeFood(){
+
+        System.out.println(res_url);
+        Ion.with(this)
+                .load(res_url)
+                .asJsonArray()
+                .setCallback(new FutureCallback<JsonArray>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonArray result) {
+                        LinearLayout layout = findViewById(R.id.food_container);
+                        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+                        if (result == null) {
+                            makeToast("result null");
+                        } else {
+
+                            for(int i= 0 ; i < result.size() ; i++){
+                                LinearLayout box=(LinearLayout)View.inflate(FoodScreen.this,R.layout.food_list,null);
+                                LinearLayout.LayoutParams layoutParams1 = new LinearLayout.LayoutParams(
+                                        ViewGroup.LayoutParams.MATCH_PARENT,300
+                                ) ;
+                                box.setLayoutParams(layoutParams1);
+                                box.setId(result.get(i).getAsJsonObject().get("f_id").getAsInt());
+                                layout.addView(box);
+                                TextView textName = box.findViewById(R.id.food_name);
+                                TextView textprice = box.findViewById(R.id.food_price);
+                                textName.setText(result.get(i).getAsJsonObject().get("f_name").getAsString());
+                                textprice.setText("Rs."+result.get(i).getAsJsonObject().get("price").getAsString());
+                            }
+
+                        }
+                    }
+                });
     }
 
     }

@@ -254,7 +254,7 @@ public class MainScreen extends AppCompatActivity
     }
     public void ResturantFoodScreen(View v){
         a =v.getId();
-        makeToast(Integer.toString(a));
+
         Ion.with(this)
                 .load("http://192.168.0.104:8000/api/get_list_of_restaurants/")
                 .asJsonObject()
