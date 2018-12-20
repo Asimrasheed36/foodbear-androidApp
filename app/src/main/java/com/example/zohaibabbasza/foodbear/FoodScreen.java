@@ -60,7 +60,7 @@ public class FoodScreen extends AppCompatActivity {
                             for(int i= 0 ; i < result.size() ; i++){
                                 LinearLayout box=(LinearLayout)View.inflate(FoodScreen.this,R.layout.food_list,null);
                                 LinearLayout.LayoutParams layoutParams1 = new LinearLayout.LayoutParams(
-                                        ViewGroup.LayoutParams.MATCH_PARENT,300
+                                        ViewGroup.LayoutParams.MATCH_PARENT,280
                                 ) ;
                                 box.setLayoutParams(layoutParams1);
                                 box.setId(result.get(i).getAsJsonObject().get("f_id").getAsInt());

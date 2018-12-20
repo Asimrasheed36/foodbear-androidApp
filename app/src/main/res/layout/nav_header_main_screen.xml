@@ -24,7 +24,8 @@
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/nav_header_vertical_spacing"
             android:text="Zohaib Abbas"
-            android:onClick="Login"
+            android:layout_marginTop="11dp"
+            android:layout_marginLeft="5dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textColor="#ffffff"
             android:paddingLeft="10dp"/>

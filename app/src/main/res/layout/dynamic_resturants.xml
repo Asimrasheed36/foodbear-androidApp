@@ -2,7 +2,7 @@
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/box"
             android:layout_width="wrap_content"
-            android:layout_height="230dp"
+            android:layout_height="245dp"
             android:orientation="vertical"
             android:onClick="ResturantFoodScreen"
             android:padding="10dp"
@@ -12,8 +12,8 @@
 
             <ImageView
                 android:id="@+id/res_image"
-                android:layout_width="wrap_content"
-                android:layout_height="150dp"
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
                 />
 
             <TextView
