@@ -59,6 +59,7 @@ public class MainScreen extends AppCompatActivity
 
         categoryView();
         ResturantView();
+        getRestaurantCount();
 
     }
 
@@ -71,7 +72,7 @@ public class MainScreen extends AppCompatActivity
 
 
         Ion.with(this)
-                .load("http://192.168.0.104:8000/api/get_type_of_foods/")
+                .load("http://192.168.0.115:8000/api/get_type_of_foods/")
                 .asJsonObject()
                 .setCallback(new FutureCallback<JsonObject>() {
                     @Override
@@ -123,7 +124,7 @@ public class MainScreen extends AppCompatActivity
     }
     public void ResturantView(){
         Ion.with(this)
-                .load("http://192.168.0.104:8000/api/get_list_of_restaurants/")
+                .load("http://192.168.0.115:8000/api/get_list_of_restaurants/")
                 .asJsonObject()
                 .setCallback(new FutureCallback<JsonObject>() {
                     @Override
@@ -160,6 +161,19 @@ public class MainScreen extends AppCompatActivity
                             }
 
                         }
+                    }
+                });
+    }
+    void getRestaurantCount() {
+        Ion.with(this)
+                .load("http://192.168.0.115:8000/api/get_restaurant_count/")
+                .asJsonArray()
+                .setCallback(new FutureCallback<JsonArray>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonArray result) {
+                        TextView tv = findViewById(R.id.res_count);
+                        tv.setText("("+result.get(0).getAsJsonObject().get("data").getAsString()+")");
+                        //System.out.println(result.get(0).getAsJsonObject().get("data").getAsString());
                     }
                 });
     }
@@ -219,7 +233,7 @@ public class MainScreen extends AppCompatActivity
 
         String b =  Integer.toString(a);
         Ion.with(this)
-                .load("http://192.168.0.104:8000/api/get_type_of_foods/")
+                .load("http://192.168.0.115:8000/api/get_type_of_foods/")
                 .asJsonObject()
                 .setCallback(new FutureCallback<JsonObject>() {
                     @Override
@@ -248,7 +262,7 @@ public class MainScreen extends AppCompatActivity
         a =v.getId();
 
         Ion.with(this)
-                .load("http://192.168.0.104:8000/api/get_list_of_restaurants/")
+                .load("http://192.168.0.115:8000/api/get_list_of_restaurants/")
                 .asJsonObject()
                 .setCallback(new FutureCallback<JsonObject>() {
                     @Override

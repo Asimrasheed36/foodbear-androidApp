@@ -35,7 +35,7 @@ public class cat_food extends AppCompatActivity {
                 .load(img_url).placeholder(R.drawable.za)
                 .fit()
                 .into(iv);
-        url_cat_res ="http://192.168.0.104:8000/api/get_filter_restaurants/"+c_id+"/";
+        url_cat_res ="http://192.168.0.115:8000/api/get_filter_restaurants/"+c_id+"/";
         RestaurantCatView();
 
     }

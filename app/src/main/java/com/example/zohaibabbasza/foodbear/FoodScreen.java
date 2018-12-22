@@ -32,7 +32,7 @@ public class FoodScreen extends AppCompatActivity {
                 .fit()
                 .into(iv);
 
-        res_url="http://192.168.0.104:8000/api/get_food_filter/"+r_id+"/";
+        res_url="http://192.168.0.115:8000/api/get_food_filter/"+r_id+"/";
 
 
         makeFood();
