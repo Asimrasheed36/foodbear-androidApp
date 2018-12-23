@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:id="@+id/food_screen"
     tools:context=".FoodScreen">
         <ImageView
             android:id="@+id/r_image"
@@ -23,7 +24,7 @@
             android:padding="10dp"/>
         <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
                 <LinearLayout
                     android:id="@+id/food_container"
                     android:layout_width="match_parent"

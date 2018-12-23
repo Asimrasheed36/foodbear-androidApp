@@ -1,8 +1,13 @@
 package com.example.zohaibabbasza.foodbear;
 
+import android.content.Context;
 import android.content.Intent;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutCompat;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -15,9 +20,19 @@ import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 import com.squareup.picasso.Picasso;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.ArrayList;
+
 public class FoodScreen extends AppCompatActivity {
-
-
+    public ArrayList<String> list = new ArrayList<String>();
+    public int a;
+    String order;
     public String res_url;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +47,7 @@ public class FoodScreen extends AppCompatActivity {
                 .fit()
                 .into(iv);
 
-        res_url="http://192.168.0.115:8000/api/get_food_filter/"+r_id+"/";
+        res_url="http://192.168.0.104:8000/api/get_food_filter/"+r_id+"/";
 
 
         makeFood();
@@ -75,6 +90,41 @@ public class FoodScreen extends AppCompatActivity {
                     }
                 });
     }
+    public void addToCart(View v){
+        LinearLayout coordinatorLayout = findViewById(R.id.food_screen);
+        a  = v.getId();
+        System.out.println(a);
+        list.add(Integer.toString(a));
+        System.out.println(list);
+        order = "";
+        Snackbar snackbar =Snackbar.make(coordinatorLayout,"Added to cart", Snackbar.LENGTH_LONG);
+        snackbar.setAction("Show Cart", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                for(int i = 0 ; i < list.size() ;i++){
+                    order = order+list.get(i)+";";
+                }
+                System.out.println(order);
+                writeToFile(order,FoodScreen.this);
+                Intent in=new Intent();
+                in.setClass(FoodScreen.this,Order.class);
+                startActivity(in);
+            }
+        });
+        snackbar.show();
+    }
+    private void writeToFile(String data,Context context) {
+        try {
+            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(context.openFileOutput("order.txt", Context.MODE_PRIVATE));
+            outputStreamWriter.write(data);
+            outputStreamWriter.close();
+        }
+        catch (IOException e) {
+            Log.e("Exception", "File write failed: " + e.toString());
+        }
+    }
+
 
     }
+
 
